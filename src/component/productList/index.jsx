@@ -5,8 +5,9 @@ import ProductCard from "../productCard";
 function ProductList() {
   return (
     <div className="product-list">
-      {data.products.map((item) => (
+      {data.products.map((item, i) => (
         <ProductCard
+          key={i}
           img={item.image}
           name={item.name}
           category={item.category}

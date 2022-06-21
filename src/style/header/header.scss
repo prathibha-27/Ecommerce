@@ -1,5 +1,12 @@
-h1 {
+.header {
   background-color: grey;
   color: aliceblue;
   padding: 5px 20px;
+
+  &-nav {
+    &-link {
+      text-decoration: none;
+      color: white;
+    }
+  }
 }
