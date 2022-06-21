@@ -13,6 +13,8 @@ function ProductList() {
           category={item.category}
           price={item.price}
           stock={item.stock}
+          id={item.id}
+          description={item.description}
         />
       ))}
     </div>

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function ProductCard({ img, name, category, price, stock }) {
+function ProductCard({ img, name, category, price, stock, id }) {
   return (
     <div className="product-card">
       <div
@@ -17,8 +17,8 @@ function ProductCard({ img, name, category, price, stock }) {
       </div>
       <div className="product-card-content">
         <div className="product-card-content-name">
-          <Link to={`/productlist /${category}`}>{category}</Link>
-          <Link to={`/productlist/${name}`}>{name}</Link>
+          <Link to={`/productlist /${id}`}>{category}</Link>
+          <Link to={`/productlist/${id}`}>{name}</Link>
         </div>
         <div className="product-card-content-price">
           <h4>${price.toFixed(2)}</h4>
