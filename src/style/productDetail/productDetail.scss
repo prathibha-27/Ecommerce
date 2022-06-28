@@ -10,8 +10,16 @@
       margin-left: 50px;
       margin-right: 40px;
       margin-top: 15px;
+
       button {
         cursor: pointer;
+        padding: 8px 12px;
+        margin-right: 5px;
+        background-color: grey;
+        border-radius: 5px;
+        border: none;
+        color: white;
+        text-transform: capitalize;
       }
     }
 
@@ -47,9 +55,17 @@
         font-weight: 400;
       }
       &-btn:focus {
-        background-color: green;
-        border: 1px solid green;
+        background-color: rgb(46, 44, 44);
+        border: none;
         color: aliceblue;
+      }
+      &-btn {
+        background-color: grey;
+        border-radius: 5px;
+        border: none;
+        color: white;
+        text-transform: capitalize;
+        padding: 10px 10px;
       }
       &-descript {
         font-size: 14px;

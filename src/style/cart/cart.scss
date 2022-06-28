@@ -1,0 +1,33 @@
+.cart {
+  margin-top: 40px;
+  &-table {
+    width: 100%;
+    &-head {
+      tr {
+        width: 100%;
+        th {
+          border-top: 1px solid #dcdcdc;
+          border-bottom: 1px solid #dcdcdc;
+          padding: 5px 0px;
+          &:first-of-type {
+            border-left: 1px solid #dcdcdc;
+          }
+          &:last-of-type {
+            border-right: 1px solid #dcdcdc;
+          }
+        }
+      }
+    }
+    &-body {
+      tr {
+        width: 100%;
+        td {
+          width: 33%;
+          button {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}

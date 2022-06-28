@@ -1,0 +1,27 @@
+.cartcard {
+  &-content {
+    display: flex;
+    justify-content: space-evenly;
+
+    &-image {
+      height: 100px;
+      width: 150px;
+      padding: 10px;
+      img {
+        height: 100%;
+        width: 100%;
+        object-fit: contain;
+      }
+    }
+    &-name {
+      padding: 10px;
+      height: 100px;
+      width: 150px;
+      text-align: center;
+    }
+    &-btn {
+      border: none;
+      background-color: transparent;
+    }
+  }
+}
