@@ -6,16 +6,21 @@ app.listen(4000, () => {
 });
 app.get("/products", (req, res) => {
   res.send(data.products);
-  console.log(req.query);
 });
 app.get("/product", (req, res) => {
   const id = req.query.id;
   const re = data.products.find((item) => item.id == id);
   res.send(re);
   console.log(re);
-  console.log(req.query);
+  console.log(id);
+});
+app.get("/cart", (req, res) => {
+  const id = req.query.id;
+  const re = data.products.find((item) => item.id == id);
+  res.send(re);
+  console.log(re);
+  console.log(id);
 });
 app.get("/", (req, res) => {
   res.send(data.products);
-  console.log(req.query);
 });

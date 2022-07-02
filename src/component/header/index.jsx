@@ -1,5 +1,5 @@
-// import React from "react";
 import { Link } from "react-router-dom";
+
 function Header() {
   return (
     <div className="header">
@@ -17,8 +17,8 @@ function Header() {
           Products
         </Link>{" "}
         |{" "}
-        <Link className="header-nav-link" to="/about">
-          About
+        <Link className="header-nav-link" to="/cart">
+          My Cart
         </Link>
       </nav>
     </div>

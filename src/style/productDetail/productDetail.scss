@@ -3,6 +3,7 @@
     display: flex;
     justify-content: center;
     padding-top: 100px;
+    height: 385px;
 
     &-btn {
       display: flex;
@@ -31,6 +32,15 @@
       padding: 15px 60px;
       padding-bottom: 20px;
       border: 1px solid #dcdcdc;
+      position: relative;
+      &-stock {
+        position: absolute;
+        right: 0px;
+        top: 0px;
+        border: 1px solid #dcdcdc;
+        color: #fff;
+        padding: 2px 5px;
+      }
       img {
         height: 100%;
         width: 100%;
@@ -54,18 +64,75 @@
         font-size: 22px;
         font-weight: 400;
       }
-      &-btn:focus {
-        background-color: rgb(46, 44, 44);
-        border: none;
-        color: aliceblue;
-      }
+
       &-btn {
-        background-color: grey;
-        border-radius: 5px;
-        border: none;
-        color: white;
-        text-transform: capitalize;
-        padding: 10px 10px;
+        display: flex;
+        &-qty {
+          display: flex;
+          height: 36px;
+          margin-right: 10px;
+          border: 1px solid #000;
+          padding: 0px 10px;
+          margin-left: 0px;
+          border-radius: 4px;
+          button {
+            border: 0;
+            background: transparent;
+            padding: 0px 7px;
+            cursor: pointer;
+          }
+
+          input:focus {
+            border: 0;
+            outline: none;
+          }
+          input {
+            border: 0;
+            text-align: center;
+            width: 30px;
+            &::-webkit-outer-spin-button,
+            &::-webkit-inner-spin-button {
+              -webkit-appearance: none;
+              margin: 0;
+            }
+
+            /* Firefox */
+            &[type="number"] {
+              -moz-appearance: textfield;
+            }
+          }
+        }
+        &-addbtn {
+          display: flex;
+          justify-content: center;
+          padding: 10px 10px;
+          background: transparent;
+          border-radius: 4px;
+          border: 1px solid grey;
+          color: grey;
+          width: 40%;
+          cursor: pointer;
+          &:disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
+            &:hover {
+              background: transparent;
+              color: grey;
+              border: 1px solid grey;
+            }
+          }
+        }
+        &-addbtn:hover {
+          background-color: rgb(43, 40, 40);
+          border: none;
+          color: aliceblue;
+        }
+        &-error {
+          display: flex;
+          flex-direction: column;
+          color: red;
+          margin: 0px;
+        }
       }
       &-descript {
         font-size: 14px;

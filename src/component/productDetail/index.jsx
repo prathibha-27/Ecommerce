@@ -1,56 +1,66 @@
-import React, { useState, useEffect, useReducer } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import logger from "use-reducer-logger";
+import { useDispatch, useSelector } from "react-redux";
+import { UPDATE_PRODUCT } from "../../redux/actions";
+import { useNavigate } from "react-router-dom";
 
-const reducer = (state, action) => {
-  switch (action.type) {
-    case "FETCH_REQUEST":
-      return { ...state, loading: true };
-    case "FETCH_SUCCESS":
-      return { ...state, product: action.payload, loading: false };
-    case "FETCH_FAIL":
-      return { ...state, loading: false, error: action.payload };
-    default:
-      return state;
-  }
-};
-
-function ProductDetail() {
+function ProductDetail(props) {
   let { id } = useParams();
-  console.log(id + "hi");
-
   const [selectedColor, setselectedColor] = useState("purple");
+  const [count, setCount] = useState(1);
+  const [click, setClick] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const history = useNavigate();
 
-  const [{ loading, error, product }, dispatch] = useReducer(logger(reducer), {
-    product: [],
-    loading: true,
-    error: "",
-  });
+  const dispatch = useDispatch();
+  const product = useSelector((state) => state.product);
+
+  console.log(product + "My thu");
   useEffect(() => {
     const fetchData = async () => {
-      dispatch({ type: "FETCH_REQUEST" });
       try {
-        const result = await axios.get("http://localhost:4000/product/?id=1");
-        console.log(result + "jii");
-        dispatch({ type: "FETCH_SUCCESS", payload: result });
+        const response = await axios.get(
+          `http://localhost:4000/product/?id=${id}`
+        );
+        dispatch(UPDATE_PRODUCT(response.data));
       } catch (err) {
-        dispatch({ type: "FETCH_FAIL", payload: err.message });
+        console.log(err);
       }
     };
     fetchData();
   }, []);
 
-  console.log(product?.data?.id + "wtf");
-  return loading ? (
-    <div>loading....</div>
-  ) : error ? (
-    <div>{error}</div>
-  ) : (
+  const handleDecrement = () => {
+    if (count > 1) setCount(count - 1);
+  };
+
+  const handleIncrement = () => {
+    setCount(parseInt(count) + 1);
+  };
+
+  const handleAddToCart = (err) => {
+    if (!count) {
+      setClick(true);
+      setErrorMessage("Please enter qty equal to or more than 1");
+    } else {
+      setErrorMessage("");
+      history(`/cart/${id}?qty=${count}`);
+    }
+  };
+
+  return (
     <div className="product-detail">
       <div className="product-detail-description">
         <div className="product-detail-description-image">
-          {product?.data?.imageGallery.map(
+          <div
+            className={`product-detail-description-image-stock ${
+              product?.stock ? "success-bg" : "error-bg"
+            }`}
+          >
+            {product?.stock ? "In Stock" : "Out of Stock"}
+          </div>
+          {product?.imageGallery.map(
             (img) => img.color == selectedColor && <img src={img.url} />
           )}
           <div className="product-detail-description-btn ">
@@ -70,17 +80,44 @@ function ProductDetail() {
         </div>
 
         <div className="product-detail-description-content">
-          <h4>{product?.data?.category}</h4>
-          <h4>{product?.data?.name}</h4>
+          <h4>{product?.category}</h4>
+          <h4>{product?.name}</h4>
           <div className="product-detail-description-content-descipt">
-            {product?.data?.description}
+            {product?.description}
           </div>
-          <h3>${product?.data?.price.toFixed(2)}</h3>
-          <div>
-            <button className="product-detail-description-content-btn">
+          <h3>${product?.price?.toFixed(2)}</h3>
+
+          <div className="product-detail-description-content-btn">
+            {product?.stock ? (
+              <div className="product-detail-description-content-btn-qty">
+                <button type="button" onClick={handleDecrement}>
+                  -
+                </button>
+                <input
+                  type="number"
+                  value={count}
+                  onChange={(event) => setCount(parseInt(event.target.value))}
+                  onBlur={() => !count && setCount(1)}
+                />
+                <button type="button" onClick={handleIncrement}>
+                  +
+                </button>
+              </div>
+            ) : null}
+            <button
+              type="button"
+              className="product-detail-description-content-btn-addbtn"
+              onClick={handleAddToCart}
+              disabled={product?.stock ? false : true}
+            >
               Add to Cart
             </button>
           </div>
+          {click && handleAddToCart ? (
+            <p className="product-detail-description-content-btn-error">
+              {errorMessage}
+            </p>
+          ) : null}
         </div>
       </div>
     </div>

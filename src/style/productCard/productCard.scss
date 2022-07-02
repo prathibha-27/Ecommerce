@@ -1,8 +1,7 @@
 .product-card {
-  height: 450px;
-  width: 320px;
+  height: 500px;
+  width: 340px;
   padding: 20px 0px;
-  // margin-right: 5px;
   position: relative;
 
   border: 1px solid #dcdcdc;
@@ -12,7 +11,7 @@
   // }
 
   &-image {
-    height: 75%;
+    height: 73%;
     width: 100%;
 
     img {
@@ -55,14 +54,66 @@
     }
 
     &-btn {
-      button {
-        margin: auto;
+      display: flex;
+      &-qty {
         display: flex;
+        height: 36px;
+        margin-right: 10px;
+        border: 1px solid #000;
+        padding: 0px 10px;
+        margin-left: 20px;
+        border-radius: 4px;
+        button {
+          border: 0;
+          background: transparent;
+          padding: 0px 7px;
+          cursor: pointer;
+        }
+
+        input:focus {
+          border: 0;
+          outline: none;
+        }
+        input {
+          border: 0;
+          text-align: center;
+          width: 30px;
+          &::-webkit-outer-spin-button,
+          &::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+          }
+
+          /* Firefox */
+          &[type="number"] {
+            -moz-appearance: textfield;
+          }
+        }
+      }
+      &-addbtn {
+        display: flex;
+        justify-content: center;
         padding: 10px 10px;
-        background-color: grey;
-        border-radius: 5px;
+        background: transparent;
+        border-radius: 4px;
+        border: 1px solid grey;
+        color: grey;
+        width: 55%;
+        cursor: pointer;
+        &:disabled {
+          cursor: not-allowed;
+          opacity: 0.5;
+          &:hover {
+            background: transparent;
+            border: 1px solid grey;
+            color: grey;
+          }
+        }
+      }
+      &-addbtn:hover {
+        background-color: rgb(43, 40, 40);
         border: none;
-        color: white;
+        color: aliceblue;
       }
     }
 
@@ -73,6 +124,14 @@
       border: 1px solid #dcdcdc;
       color: #fff;
       padding: 2px 5px;
+    }
+
+    &-error {
+      margin-top: 0px;
+      margin-left: 18px;
+      display: flex;
+      color: red;
+      font-size: 14px;
     }
   }
 }

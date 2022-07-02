@@ -1,39 +1,26 @@
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import ProductCard from "../productCard";
 import axios from "axios";
-import React, { useEffect, useReducer } from "react";
-import logger from "use-reducer-logger";
-import Cart from "../cart";
-import data from "../data";
+import { UPDATE_PRODUCT_LIST } from "../../redux/actions";
 
-const reducer = (state, action) => {
-  switch (action.type) {
-    case "FETCH_REQUEST":
-      return { ...state, loading: true };
-    case "FETCH_SUCCESS":
-      return { ...state, products: action.payload, loading: false };
-    case "FETCH_FAIL":
-      return { ...state, loading: false, error: action.payload };
-    default:
-      return state;
-  }
-};
 function ProductList() {
   // const [product, setproduct] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  const [{ loading, error, products }, dispatch] = useReducer(logger(reducer), {
-    products: [],
-    loading: true,
-    error: "",
-  });
+  const dispatch = useDispatch();
+  const productList = useSelector((state) => state.productList);
 
   useEffect(() => {
     const fetchData = async () => {
-      dispatch({ type: "FETCH_REQUEST" });
+      setLoading(true);
       try {
         const result = await axios.get("http://localhost:4000/products");
-        dispatch({ type: "FETCH_SUCCESS", payload: result.data });
+        dispatch(UPDATE_PRODUCT_LIST(result.data));
+        setLoading(false);
       } catch (err) {
-        dispatch({ type: "FETCH_FAIL", payload: err.message });
+        console.log(err);
+        setLoading(false);
       }
     };
     fetchData();
@@ -50,11 +37,9 @@ function ProductList() {
   return (
     <div className="product-list">
       {loading ? (
-        <div>Loading...</div>
-      ) : error ? (
-        <div>{error}</div>
+        <p>Loading</p>
       ) : (
-        products.map((item, i) => (
+        productList?.map((item, i) => (
           <>
             <ProductCard
               key={i}
@@ -65,6 +50,7 @@ function ProductList() {
               stock={item.stock}
               id={item.id}
               description={item.description}
+              item={item}
             />
           </>
         ))

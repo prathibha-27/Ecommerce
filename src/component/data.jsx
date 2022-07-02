@@ -32,11 +32,11 @@ const data = {
       imageGallery: [
         {
           color: "purple",
-          url: "https://media.glamour.com/photos/5696641d16d0dc3747f0146b/master/w_1600%2Cc_limit/fashion-2015-11-plaid-shirt-outfit-idea-with-love-from-kat-main.jpg",
+          url: "https://i.pinimg.com/originals/37/3a/af/373aaf02230df90fee8232da2946e8f1.jpg",
         },
         {
           color: "blue",
-          url: "https://media.glamour.com/photos/5696641d16d0dc3747f01462/master/w_1600%2Cc_limit/fashion-2015-11-plaid-shirt-outfit-idea-viva-luxury-main.jpg",
+          url: "https://stylesatlife.com/wp-content/uploads/2022/01/Blue-and-Black-Check-Long-Shirt.jpg.web",
         },
       ],
     },
@@ -52,11 +52,11 @@ const data = {
       imageGallery: [
         {
           color: "purple",
-          url: "https://media.glamour.com/photos/5696641d16d0dc3747f0146b/master/w_1600%2Cc_limit/fashion-2015-11-plaid-shirt-outfit-idea-with-love-from-kat-main.jpg",
+          url: "https://assets.ajio.com/medias/sys_master/root/20220128/eoho/61f405ebf997dd662345fbdd/-473Wx593H-441133397-pink-MODEL.jpg",
         },
         {
           color: "blue",
-          url: "https://media.glamour.com/photos/5696641d16d0dc3747f01462/master/w_1600%2Cc_limit/fashion-2015-11-plaid-shirt-outfit-idea-viva-luxury-main.jpg",
+          url: "https://media.boohoo.com/i/boohoo/fzz44259_black_xl?w=900&qlt=default&fmt.jp2.qlt=70&fmt=auto&sm=fit",
         },
       ],
     },
