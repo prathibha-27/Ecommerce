@@ -4,6 +4,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { UPDATE_PRODUCT } from "../../redux/actions";
 import { useNavigate } from "react-router-dom";
+import useAddToCart from "../../customHooks/useAddToCart";
 
 function ProductDetail(props) {
   let { id } = useParams();
@@ -11,19 +12,21 @@ function ProductDetail(props) {
   const [count, setCount] = useState(1);
   const [click, setClick] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const history = useNavigate();
+  // const history = useNavigate();
+  const { handleAddToCart } = useAddToCart();
 
   const dispatch = useDispatch();
   const product = useSelector((state) => state.product);
 
-  console.log(product + "My thu");
+  console.log(product, "My thu");
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
           `http://localhost:4000/product/?id=${id}`
         );
-        dispatch(UPDATE_PRODUCT(response.data));
+
+        dispatch(UPDATE_PRODUCT(response));
       } catch (err) {
         console.log(err);
       }
@@ -39,13 +42,23 @@ function ProductDetail(props) {
     setCount(parseInt(count) + 1);
   };
 
-  const handleAddToCart = (err) => {
+  // const handleAddToCart = (err) => {
+  //   if (!count) {
+  //     setClick(true);
+  //     setErrorMessage("Please enter qty equal to or more than 1");
+  //   } else {
+  //     setErrorMessage("");
+  //     // history(`/cart/${id}?/qty=${count}`);
+  //   }
+  // };
+
+  const addToCart = () => {
     if (!count) {
       setClick(true);
-      setErrorMessage("Please enter qty equal to or more than 1");
+      setErrorMessage("please enter qty equal to or more than 1");
     } else {
       setErrorMessage("");
-      history(`/cart/${id}?qty=${count}`);
+      handleAddToCart(product?.data, count);
     }
   };
 
@@ -55,12 +68,12 @@ function ProductDetail(props) {
         <div className="product-detail-description-image">
           <div
             className={`product-detail-description-image-stock ${
-              product?.stock ? "success-bg" : "error-bg"
+              product?.data?.stock ? "success-bg" : "error-bg"
             }`}
           >
-            {product?.stock ? "In Stock" : "Out of Stock"}
+            {product?.data?.stock ? "In Stock" : "Out of Stock"}
           </div>
-          {product?.imageGallery.map(
+          {product?.data?.imageGallery.map(
             (img) => img.color == selectedColor && <img src={img.url} />
           )}
           <div className="product-detail-description-btn ">
@@ -80,15 +93,15 @@ function ProductDetail(props) {
         </div>
 
         <div className="product-detail-description-content">
-          <h4>{product?.category}</h4>
-          <h4>{product?.name}</h4>
+          <h4>{product?.data?.category}</h4>
+          <h4>{product?.data?.name}</h4>
           <div className="product-detail-description-content-descipt">
-            {product?.description}
+            {product?.data?.description}
           </div>
-          <h3>${product?.price?.toFixed(2)}</h3>
+          <h3>${product?.data?.price?.toFixed(2)}</h3>
 
           <div className="product-detail-description-content-btn">
-            {product?.stock ? (
+            {product?.data?.stock ? (
               <div className="product-detail-description-content-btn-qty">
                 <button type="button" onClick={handleDecrement}>
                   -
@@ -107,13 +120,13 @@ function ProductDetail(props) {
             <button
               type="button"
               className="product-detail-description-content-btn-addbtn"
-              onClick={handleAddToCart}
-              disabled={product?.stock ? false : true}
+              onClick={addToCart}
+              disabled={product?.data?.stock ? false : true}
             >
               Add to Cart
             </button>
           </div>
-          {click && handleAddToCart ? (
+          {click && addToCart ? (
             <p className="product-detail-description-content-btn-error">
               {errorMessage}
             </p>

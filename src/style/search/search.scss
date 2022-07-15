@@ -1,0 +1,27 @@
+.search {
+  padding-top: 10px;
+  z-index: 1;
+
+  &-content {
+    display: flex;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.05);
+    color: black;
+    background: #f4f4f4;
+    padding: 10px 4px 10px 10px;
+    border-radius: 5px;
+    &-contents {
+      margin-left: 5px;
+    }
+  }
+  &-input {
+    height: 30px;
+    width: 340px;
+    font-size: 20px;
+    border: none;
+    border-radius: 5px;
+    padding-left: 10px;
+    &:focus {
+      outline: none;
+    }
+  }
+}

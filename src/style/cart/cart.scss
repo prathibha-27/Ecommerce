@@ -1,33 +1,41 @@
 .cart {
+  display: flex;
+  padding: 0 20px;
   margin-top: 40px;
-  &-table {
+
+  &-t {
     width: 100%;
-    &-head {
-      tr {
-        width: 100%;
-        th {
-          border-top: 1px solid #dcdcdc;
-          border-bottom: 1px solid #dcdcdc;
-          padding: 5px 0px;
-          &:first-of-type {
-            border-left: 1px solid #dcdcdc;
+    &-table {
+      padding-left: 5%;
+      padding-right: 5%;
+      width: 100%;
+
+      &-head {
+        background-color: grey;
+        color: white;
+
+        tr {
+          width: 100%;
+          th {
+            padding: 5px 40px;
           }
-          &:last-of-type {
-            border-right: 1px solid #dcdcdc;
+        }
+      }
+      &-body {
+        tr {
+          width: 100%;
+          td {
+            width: 20%;
+            button {
+              width: 100%;
+            }
           }
         }
       }
     }
-    &-body {
-      tr {
-        width: 100%;
-        td {
-          width: 33%;
-          button {
-            width: 100%;
-          }
-        }
-      }
-    }
+  }
+
+  &-summary {
+    width: 25%;
   }
 }

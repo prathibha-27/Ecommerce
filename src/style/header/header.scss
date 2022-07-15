@@ -2,11 +2,16 @@
   background-color: grey;
   color: aliceblue;
   padding: 5px 20px;
+  height: 100px;
 
-  &-nav {
-    &-link {
-      text-decoration: none;
-      color: white;
+  &-head {
+    &-nav {
+      display: flex;
+      justify-content: space-between;
+      &-link {
+        text-decoration: none;
+        color: white;
+      }
     }
   }
 }

@@ -49,8 +49,8 @@ function ProductCard({ img, name, category, price, stock, id, item }) {
       </div>
       <div className="product-card-content">
         <div className="product-card-content-name">
-          <Link to={`/productlist/${id}`}>{category}</Link>
-          <Link to={`/productlist/${id}`}>{name}</Link>
+          <Link to={`/productdetail/${id}`}>{category}</Link>
+          <Link to={`/productdetail/${id}`}>{name}</Link>
         </div>
         <div className="product-card-content-price">
           <h4>${price.toFixed(2)}</h4>

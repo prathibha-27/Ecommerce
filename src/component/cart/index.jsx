@@ -1,11 +1,7 @@
 import React, { useEffect } from "react";
-import data from "../data";
 import CartCard from "../cartCard";
-import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import axios from "axios";
-import { UPDATE_CART } from "../../redux/actions";
-import { cart } from "../../redux/reducers/cart";
+import { useSelector } from "react-redux";
+import CartSummary from "../cartSummary";
 
 function Cart() {
   const cart = useSelector((state) => state.cart);
@@ -13,30 +9,38 @@ function Cart() {
   return (
     <>
       <div className="cart">
-        <table className="cart-table">
-          <thead className="cart-table-head">
-            <tr>
-              <th>Products</th>
-              <th>Name</th>
-              <th>Qty</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody className="cart-table-body">
-            {cart.map((item) => (
+        <div className="cart-t">
+          <table className="cart-t-table">
+            <thead className="cart-t-table-head">
               <tr>
-                <CartCard
-                  name={item.name}
-                  img={item.image}
-                  id={item.id}
-                  stock={item.stock}
-                  qty={item.qty}
-                />
+                <th>Products</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Qty</th>
+                <th>Subtotal</th>
+                <th>Action</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-        ;
+            </thead>
+            <tbody className="cart-t-table-body">
+              {cart.map((item) => (
+                <tr>
+                  <CartCard
+                    name={item.name}
+                    img={item.image}
+                    id={item.id}
+                    stock={item.stock}
+                    qty={item.qty}
+                    price={item.price}
+                    item={item}
+                  />
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <div className="cart-summary">
+          <CartSummary />
+        </div>
       </div>
     </>
   );

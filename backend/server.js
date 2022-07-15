@@ -7,6 +7,7 @@ app.listen(4000, () => {
 app.get("/products", (req, res) => {
   res.send(data.products);
 });
+
 app.get("/product", (req, res) => {
   const id = req.query.id;
   const re = data.products.find((item) => item.id == id);
@@ -14,6 +15,7 @@ app.get("/product", (req, res) => {
   console.log(re);
   console.log(id);
 });
+
 app.get("/cart", (req, res) => {
   const id = req.query.id;
   const re = data.products.find((item) => item.id == id);

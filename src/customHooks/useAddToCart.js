@@ -9,11 +9,11 @@ export default function useAddToCart() {
     const newData = data;
     newData.qty = qty;
     if (cart.length) {
-      const duplicate = cart?.find((item) => item.id == data.id);
+      const duplicate = cart?.find((item) => item.id === data.id);
       console.log(duplicate);
       const dup = duplicate;
       if (dup && dup?.id) {
-        alert("M");
+        alert("product added to cart successfully");
         const dup1 = dup.qty;
         dup.qty = dup1 + parseInt(qty);
         console.log(qty);
