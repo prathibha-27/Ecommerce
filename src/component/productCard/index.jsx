@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import useAddToCart from "../../customHooks/useAddToCart";
 function ProductCard({ img, name, category, price, stock, id, item }) {
-  console.log(name);
 
   const [count, setCount] = useState(1);
   const [error, setError] = useState(" ");

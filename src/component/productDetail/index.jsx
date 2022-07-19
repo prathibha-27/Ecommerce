@@ -18,7 +18,6 @@ function ProductDetail(props) {
   const dispatch = useDispatch();
   const product = useSelector((state) => state.product);
 
-  console.log(product, "My thu");
   useEffect(() => {
     const fetchData = async () => {
       try {

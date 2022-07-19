@@ -5,7 +5,6 @@ import { UPDATE_CART } from "../../redux/actions";
 
 function CartCard({ name, item, id, img, qty, price }) {
   const [quantity, setQuantity] = useState(qty);
-
   const p = parseInt(price);
   const q = parseInt(quantity);
   const dispatch = useDispatch();
@@ -37,9 +36,6 @@ function CartCard({ name, item, id, img, qty, price }) {
       <td className="cartcard-content-price">{price}</td>
       <td className="cartcard-content-qty">
         <input type="number" value={quantity} onChange={(e) => handleEdit(e)} />
-        {/* {updateCart.map((item, key) => (
-          <div key={key}>{item.qty}</div>
-        ))} */}
       </td>
       <td className="cartcard-content-subtotal">{q ? p * q : p}</td>
       <td>

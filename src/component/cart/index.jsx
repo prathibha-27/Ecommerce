@@ -6,7 +6,6 @@ import { UPDATE_CART } from "../../redux/actions";
 
 function Cart() {
   const cart = useSelector((state) => state.cart);
-
   const [del, setDel] = useState(cart);
   const dispatch = useDispatch();
 
@@ -17,7 +16,6 @@ function Cart() {
     dispatch(UPDATE_CART([]));
   };
 
-  console.log(del, "hin");
   return (
     <>
       <div className="cart">

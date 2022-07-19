@@ -10,7 +10,6 @@ function CartSummary() {
   const [fromCountires, setFromCountries] = useState(countryList);
   const [formState, setFormState] = useState([]);
   const [zipcode, setZipCode] = useState("");
-  const [orderTotal, setOrderTotal] = useState();
   const [grandTotal, setGrandTotal] = useState(0);
 
   const cart = useSelector((state) => state.cart);

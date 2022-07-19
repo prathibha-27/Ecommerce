@@ -10,7 +10,6 @@ function ProductList() {
 
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.productList);
-  console.log(productList, "bye");
 
   useEffect(() => {
     const fetchData = async () => {
