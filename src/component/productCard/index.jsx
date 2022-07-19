@@ -31,6 +31,13 @@ function ProductCard({ img, name, category, price, stock, id, item }) {
     } else {
       setError("");
       handleAddToCart(item, count);
+      // if (
+      //   window.confirm(
+      //     `Product added to cart successfully\nClick on "Ok" to continue view or "Cancel"`
+      //   )
+      // ) {
+      //   window.open("/cart", "_tab");
+      // }
     }
   };
   return (

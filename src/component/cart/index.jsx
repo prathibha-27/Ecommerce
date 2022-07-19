@@ -1,11 +1,23 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import CartCard from "../cartCard";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CartSummary from "../cartSummary";
+import { UPDATE_CART } from "../../redux/actions";
 
 function Cart() {
   const cart = useSelector((state) => state.cart);
 
+  const [del, setDel] = useState(cart);
+  const dispatch = useDispatch();
+
+  const handleDeleteAll = () => {
+    if (cart.length > 0) {
+      setDel([]);
+    }
+    dispatch(UPDATE_CART([]));
+  };
+
+  console.log(del, "hin");
   return (
     <>
       <div className="cart">
@@ -37,6 +49,11 @@ function Cart() {
               ))}
             </tbody>
           </table>
+          {del.length ? (
+            <div className="cart-t-btn">
+              <button onClick={() => handleDeleteAll()}>Delete All</button>
+            </div>
+          ) : null}
         </div>
         <div className="cart-summary">
           <CartSummary />

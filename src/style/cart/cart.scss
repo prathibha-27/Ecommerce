@@ -5,6 +5,21 @@
 
   &-t {
     width: 100%;
+
+    &-btn {
+      display: flex;
+      justify-content: flex-end;
+      padding-right: 5.5%;
+      padding-top: 15px;
+      button {
+        background: grey;
+        border-radius: 8px;
+        height: 30px;
+        width: 80px;
+        border: none;
+        color: white;
+      }
+    }
     &-table {
       padding-left: 5%;
       padding-right: 5%;
