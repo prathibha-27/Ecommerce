@@ -1,0 +1,53 @@
+.pickup {
+  border: 1px solid #cdcdcd;
+  width: 640px;
+  height: auto;
+  padding: 30px;
+
+  p {
+    margin: 0px;
+    color: red;
+    font-size: 12px;
+  }
+  select {
+    padding: 7px;
+    width: 400px;
+    margin: auto;
+  }
+  &-address {
+    display: flex;
+    justify-content: space-between;
+    margin-right: 140px;
+    padding-top: 20px;
+
+    input {
+      width: 220px;
+      padding: 7px;
+      outline: none;
+    }
+  }
+  &-date {
+    margin-top: 20px;
+    input {
+      width: 100px;
+      padding: 7px;
+      outline: none;
+    }
+  }
+  &-next {
+    margin-top: 20px;
+    button {
+      border: 1px solid rgb(248, 59, 59);
+      padding: 12px;
+      width: 100px;
+      color: rgb(248, 59, 59);
+      cursor: pointer;
+      text-align: center;
+      background-color: transparent;
+      &:hover {
+        background-color: rgb(248, 59, 59);
+        color: white;
+      }
+    }
+  }
+}

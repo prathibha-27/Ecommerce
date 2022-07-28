@@ -5,11 +5,13 @@ import ProductDetail from "./component/productDetail";
 import Cart from "./component/cart";
 import { Provider } from "react-redux/es/exports";
 import store from "../src/redux/store";
+import ShippingPage from "./component/shippingPage";
 
 import "../src/style/global.scss";
 import "./style.scss";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import PaymentPage from "./component/paymentPage";
 
 function App() {
   return (
@@ -26,6 +28,8 @@ function App() {
               element={<ProductDetail />}
             />
             <Route path="/cart" exact element={<Cart />} />
+            <Route path="/shipping" element={<ShippingPage />} />
+            <Route path="/payment" element={<PaymentPage />} />
           </Routes>
         </BrowserRouter>
       </Provider>

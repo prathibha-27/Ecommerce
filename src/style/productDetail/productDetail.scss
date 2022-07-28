@@ -16,10 +16,10 @@
         cursor: pointer;
         padding: 8px 12px;
         margin-right: 5px;
-        background-color: grey;
+        background-color: white;
+        border: 1px solid #cdcdcd;
         border-radius: 5px;
-        border: none;
-        color: white;
+        color: #000;
         text-transform: capitalize;
       }
     }
@@ -123,7 +123,7 @@
           }
         }
         &-addbtn:hover {
-          background-color: rgb(43, 40, 40);
+          background-color: #f83b3b;
           border: none;
           color: aliceblue;
         }

@@ -21,6 +21,10 @@ function Header() {
           |{" "}
           <Link className="header-head-nav-link" to="/cart">
             My Cart
+          </Link>{" "}
+          |{" "}
+          <Link className="header-head-nav-link" to="/shipping">
+            Shipping
           </Link>
         </nav>
 

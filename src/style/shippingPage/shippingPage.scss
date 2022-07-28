@@ -1,0 +1,53 @@
+.checkout {
+  display: flex;
+  margin-left: 100px;
+  margin-top: 90px;
+
+  &-shipping {
+    &-btn {
+      // justify-content: space-between;
+      &-shipping {
+        border: 1px solid rgb(248, 59, 59);
+        padding: 20px;
+        width: 100px;
+        color: rgb(248, 59, 59);
+        text-align: center;
+        cursor: pointer;
+        input[type="radio"] {
+          display: none;
+        }
+      }
+      &-pickup {
+        border: 1px solid rgb(248, 59, 59);
+        padding: 20px;
+        width: 100px;
+        color: rgb(248, 59, 59);
+        text-align: center;
+        cursor: pointer;
+        input[type="radio"] {
+          display: none;
+        }
+
+        // margin-right: 1100px;
+      }
+    }
+  }
+  &-summary {
+    border: 1px solid #cdcdcd;
+    padding: 20px 20px;
+    margin-left: 100px;
+    height: auto;
+    margin-bottom: auto;
+
+    &-total {
+      display: flex;
+      justify-content: space-between;
+      padding-right: 200px;
+    }
+  }
+}
+
+.selected-bg {
+  background-color: #f83b3b;
+  color: aliceblue;
+}
