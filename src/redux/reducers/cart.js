@@ -7,3 +7,13 @@ export const cart = (state = [], action) => {
       return state;
   }
 };
+
+export const minicart = (state = false, action) => {
+  switch (action.type) {
+    case "DISPLAY_MINICART": {
+      return action.val;
+    }
+    default:
+      return state;
+  }
+};

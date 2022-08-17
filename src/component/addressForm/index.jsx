@@ -3,6 +3,7 @@ import { useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { UPDATE_ADDRESS } from "../../redux/actions";
+import { useLocation } from "react-router-dom";
 
 function AddressForm() {
   const countryList = [
@@ -27,7 +28,7 @@ function AddressForm() {
   const handleBack = () => {
     setChangeAddress(false);
   };
-  console.log(inputValue, "wf");
+
   const handleFromCountries = (e) => {
     const country = countryList.find(
       (country) => country.name === e.target.value
@@ -36,16 +37,25 @@ function AddressForm() {
     setFormState(country.state);
   };
 
-  const handleCancelChange = () => {
-    setInputValue({});
+  const handleCancelChange = (e) => {
+    setInputValue({
+      firstname: "",
+      lastname: "",
+      city: "",
+      addressline1: "",
+      addressline2: "",
+      phone: "",
+    });
+    setSelectedState({ selectedState: "" });
+    setFromCountries({ fromCountries: "" });
   };
-  console.log(inputValue, "deleted");
+
 
   const handleFormSubmit = () => {
     setClick(true);
     const { firstname, lastname, city, addressline1, phone } = inputValue;
     Object.assign(inputValue, { selectedState, fromCountries });
-    console.log(inputValue, "update");
+   
 
     if (
       firstname &&
@@ -61,7 +71,7 @@ function AddressForm() {
   };
 
   const handleNext = () => {
-    history("/payment");
+    history("/payment", { state: { shipClick: true, inputValue } });
   };
 
   const handleUpdateForm = () => {
@@ -69,11 +79,6 @@ function AddressForm() {
     setChangeAddress(false);
   };
 
-  // useEffect(() => {
-  //   dispatch(UPDATE_ADDRESS({ inputValue, selectedState, fromCountries }));
-  // }, [inputValue]);
-
-  console.log(address, "my");
   return (
     <>
       {!address.firstname || changeAddress ? (
@@ -163,6 +168,7 @@ function AddressForm() {
                 onChange={(e) => setSelectedState(e.target.value)}
               >
                 <option>Select State</option>
+
                 {formState.map((state, key) => (
                   <option key={key} value={state}>
                     {state}
@@ -217,8 +223,7 @@ function AddressForm() {
               <button
                 type="button"
                 className="addressform-btn-cancel"
-                onChange={(e) => setInputValue(e.target.value)}
-                onClick={() => handleCancelChange()}
+                onClick={(e) => handleCancelChange(e)}
                 disabled={inputValue ? false : true}
               >
                 Cancel

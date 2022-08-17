@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { CLEAR_ADDRESS, UPDATE_PICKUP } from "../../redux/actions";
+import { UPDATE_PICKUP } from "../../redux/actions";
 
 function PickupForm() {
   const pickupList = ["Warehouse1", "Warehouse2"];
@@ -21,8 +21,6 @@ function PickupForm() {
     setInputValue({ ...inputValue, [e.target.name]: e.target.value });
   };
 
-  console.log(pickup, "fixed");
-
   const handlePickup = (e) => {
     const warehouse = pickupList.find(
       (warehouse) => warehouse === e.target.value
@@ -36,11 +34,9 @@ function PickupForm() {
     dispatch(UPDATE_PICKUP(inputValue));
     if (click) {
       setClick(true);
-      history("/payment");
+      history("/payment", { state: { shipClick: false, inputValue } });
     }
   };
-
-  console.log(inputValue, "object");
 
   return (
     <div className="pickup">

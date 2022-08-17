@@ -1,0 +1,52 @@
+.minicartCard {
+  position: relative;
+
+  &-list {
+    list-style-type: none;
+    padding-right: 15px;
+    padding-left: 15px;
+
+    &-products {
+      display: flex;
+
+      img {
+        height: 75px;
+        width: 75px;
+      }
+      &-details {
+        margin-left: 20px;
+        &-pricing {
+          font-size: 12px;
+          color: black;
+          display: flex;
+          justify-content: space-between;
+
+          &-name {
+            padding-right: 45px;
+          }
+        }
+        &-actions {
+          margin-top: 15px;
+          input {
+            width: 37px;
+            height: 25px;
+            text-align: center;
+
+            &::-webkit-outer-spin-button,
+            &::-webkit-inner-spin-button {
+              -webkit-appearance: none;
+              margin: 0;
+            }
+
+            /* Firefox */
+            &[type="number"] {
+              -moz-appearance: textfield;
+            }
+          }
+          display: flex;
+          justify-content: space-between;
+        }
+      }
+    }
+  }
+}

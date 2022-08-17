@@ -26,3 +26,8 @@ export const UPDATE_PICKUP = (val) => ({
   type: "UPDATE_PICKUP",
   val,
 });
+
+export const DISPLAY_MINICART = (val) => ({
+  type: "DISPLAY_MINICART",
+  val,
+});

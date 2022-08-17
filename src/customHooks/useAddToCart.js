@@ -10,12 +10,11 @@ export default function useAddToCart() {
     const newData = data;
     newData.qty = qty;
     if (cart.length) {
-      const duplicate = cart?.find((item) => item.id == data.id);
+      const duplicate = cart?.find((item) => item.id === data.id);
       const dup = duplicate;
       if (dup && dup?.id) {
         const dup1 = dup.qty;
         dup.qty = dup1 + parseInt(qty);
-
         const existItem = cart.filter((item) => item.id !== data.id);
         dispatch(UPDATE_CART([...existItem, dup]));
       } else {

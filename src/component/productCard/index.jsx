@@ -2,12 +2,17 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import useAddToCart from "../../customHooks/useAddToCart";
-function ProductCard({ img, name, category, price, stock, id, item }) {
+import { DISPLAY_MINICART } from "../../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
 
+function ProductCard({ img, name, category, price, stock, id, item }) {
   const [count, setCount] = useState(1);
   const [error, setError] = useState(" ");
   const [click, setClick] = useState(false);
   const { handleAddToCart } = useAddToCart();
+  const dispatch = useDispatch();
+
+  const minicart = useSelector((state) => state.minicart);
 
   const handleDecrement = () => {
     if (count > 1) {
@@ -23,13 +28,17 @@ function ProductCard({ img, name, category, price, stock, id, item }) {
     }
   };
 
-  const addToCart = () => {
+  const addToCart = (e) => {
+    e.stopPropagation();
     if (!count) {
       setClick(true);
       setError("please enter qty equal to or more than 1");
     } else {
       setError("");
       handleAddToCart(item, count);
+
+      dispatch(DISPLAY_MINICART(true));
+
       // if (
       //   window.confirm(
       //     `Product added to cart successfully\nClick on "Ok" to continue view or "Cancel"`
@@ -39,6 +48,7 @@ function ProductCard({ img, name, category, price, stock, id, item }) {
       // }
     }
   };
+
   return (
     <div className="product-card">
       <div
@@ -85,7 +95,7 @@ function ProductCard({ img, name, category, price, stock, id, item }) {
           <button
             type="button"
             className="product-card-content-btn-addbtn"
-            onClick={addToCart}
+            onClick={(e) => addToCart(e)}
             disabled={stock ? false : true}
           >
             Add to Cart

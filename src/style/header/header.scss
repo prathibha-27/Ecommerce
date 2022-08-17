@@ -8,9 +8,35 @@
     &-nav {
       display: flex;
       justify-content: space-between;
+
       &-link {
         text-decoration: none;
         color: white;
+      }
+      &-actions {
+        display: flex;
+
+        &-minicart {
+          position: relative;
+          margin-left: 30px;
+          &-icon {
+            margin-right: 30px;
+            position: relative;
+            height: 50px;
+            width: 30px;
+          }
+          &-itemcount {
+            background-color: red;
+            border-radius: 5px;
+            width: 15px;
+            text-align: center;
+            font-size: 10px;
+            height: 14px;
+            position: absolute;
+            top: -5px;
+            left: 20px;
+          }
+        }
       }
     }
   }

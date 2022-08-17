@@ -1,7 +1,9 @@
 .checkout {
   display: flex;
-  margin-left: 100px;
+  justify-content: space-between;
+  margin-left: 60px;
   margin-top: 90px;
+  margin-right: 50px;
 
   &-shipping {
     &-btn {

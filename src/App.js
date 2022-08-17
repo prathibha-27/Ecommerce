@@ -6,6 +6,7 @@ import Cart from "./component/cart";
 import { Provider } from "react-redux/es/exports";
 import store from "../src/redux/store";
 import ShippingPage from "./component/shippingPage";
+import MiniCart from "./component/minicart";
 
 import "../src/style/global.scss";
 import "./style.scss";
@@ -27,6 +28,7 @@ function App() {
               exact
               element={<ProductDetail />}
             />
+
             <Route path="/cart" exact element={<Cart />} />
             <Route path="/shipping" element={<ShippingPage />} />
             <Route path="/payment" element={<PaymentPage />} />

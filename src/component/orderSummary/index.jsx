@@ -13,7 +13,6 @@ function OrderSummary({ item, name, img, qty, price }) {
     amnt = qty * price;
     setAmount(amnt);
   }, []);
-  console.log(amount, "we");
 
   return (
     <>
