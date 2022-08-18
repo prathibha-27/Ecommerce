@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-function CartSummary() {
+function CartSummary({ flag }) {
   const countryList = [
     { name: "India", state: ["Karnataka", "Maharastra"] },
     { name: "America", state: [] },
@@ -12,6 +12,7 @@ function CartSummary() {
   const [formState, setFormState] = useState([]);
   const [zipcode, setZipCode] = useState("");
   const [grandTotal, setGrandTotal] = useState(0);
+
   const history = useNavigate();
 
   const cart = useSelector((state) => state.cart);
@@ -33,7 +34,9 @@ function CartSummary() {
   }, [cart]);
 
   const handleCheckoutNavigation = () => {
-    history("/shipping");
+    if (!flag) {
+      history("/shipping");
+    }
   };
 
   return (
@@ -86,11 +89,11 @@ function CartSummary() {
       <hr />
       <div className="cartsummary-grandtotal">
         <div>
-          <p> Grandtotal : {grandTotal}</p>
+          <p> Grandtotal : {grandTotal.toFixed(2)}</p>
         </div>
 
         <div className="cartsummary-grandtotal-btn">
-          <button onClick={() => handleCheckoutNavigation()}>
+          <button onClick={() => handleCheckoutNavigation()} disabled={flag}>
             Proceed to Checkout
           </button>
         </div>

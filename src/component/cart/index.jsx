@@ -7,6 +7,8 @@ import { UPDATE_CART } from "../../redux/actions";
 function Cart() {
   const cart = useSelector((state) => state.cart);
   const [del, setDel] = useState(cart);
+  const [flag, setFlag] = useState(false);
+
   const dispatch = useDispatch();
 
   const handleDeleteAll = () => {
@@ -35,6 +37,8 @@ function Cart() {
               {cart.map((item) => (
                 <tr>
                   <CartCard
+                    flag={flag}
+                    setFlag={setFlag}
                     name={item.name}
                     img={item.image}
                     id={item.id}
@@ -54,7 +58,7 @@ function Cart() {
           ) : null}
         </div>
         <div className="cart-summary">
-          <CartSummary />
+          <CartSummary flag={flag} setFlag={setFlag} />
         </div>
       </div>
     </>

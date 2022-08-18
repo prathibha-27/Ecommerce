@@ -3,23 +3,47 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { UPDATE_CART } from "../../redux/actions";
 
-function CartCard({ name, item, id, img, qty, price }) {
-  const [quantity, setQuantity] = useState(qty);
+function CartCard({ name, item, id, img, qty, price, flag, setFlag }) {
+  const [quantity, setQuantity] = useState(0);
+  const [error, setError] = useState(false);
+
   const p = parseInt(price);
   const q = parseInt(quantity);
   const dispatch = useDispatch();
   const updateCart = useSelector((state) => state.cart);
 
+  useEffect(() => {
+    setQuantity(qty);
+    updateCart.map((item) => {
+      if (item.id && item.id === id && quantity > item.stock) {
+        setFlag(true);
+        setError(true);
+        return { ...item, qty: " " };
+      }
+    });
+  }, [updateCart]);
+
   const handleEdit = (e) => {
     setQuantity(e.target.value);
+  };
 
+  const handleBlur = (e) => {
     const data = updateCart.map((item) => {
-      if (item.id && item.id === id) {
-        return { ...item, qty: e.target.value };
+      if (item.id && item.id === id && !quantity) {
+        setError(false);
+        setFlag(false);
+        return { ...item, qty: 1 };
+      } else if (item.id && item.id === id) {
+        setError(false);
+        setFlag(false);
+        return { ...item, qty: parseInt(e.target.value) };
       } else {
+        setError(false);
+        setFlag(false);
         return { ...item };
       }
     });
+
     dispatch(UPDATE_CART(data));
   };
 
@@ -35,7 +59,17 @@ function CartCard({ name, item, id, img, qty, price }) {
       <td className="cartcard-content-name">{name}</td>
       <td className="cartcard-content-price">{price}</td>
       <td className="cartcard-content-qty">
-        <input type="number" value={quantity} onChange={(e) => handleEdit(e)} />
+        <input
+          type="number"
+          value={quantity}
+          onChange={(e) => handleEdit(e)}
+          onBlur={(e) => handleBlur(e)}
+        />
+        {error ? (
+          <p style={{ color: "red", fontSize: "14px", textAlign: "center" }}>
+            Please enter qty within stock
+          </p>
+        ) : null}
       </td>
       <td className="cartcard-content-subtotal">{q ? p * q : p}</td>
       <td>
