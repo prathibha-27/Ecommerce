@@ -6,10 +6,8 @@ import { DISPLAY_MINICART } from "../../redux/actions";
 function MiniCart() {
   const cartItems = useSelector((state) => state.cart);
   const [grandTotal, setgrandTotal] = useState();
-  const [flag, setFlag] = useState(false);
   const [error, setError] = useState(false);
-  const [q, setQ] = useState({});
-
+  const [flag, setFlag] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -21,28 +19,24 @@ function MiniCart() {
   }, [cartItems]);
 
   const history = useNavigate();
-
-  const handleViewCartNavigation = () => {
-    if (!flag) {
+  const t = cartItems.map((item) => item.qty <= item.stock);
+  const handleViewCartNavigation = (e) => {
+    if (!t.includes(false)) {
+      setError(false);
       history("/cart");
       dispatch(DISPLAY_MINICART(false));
+    } else {
+      setError(true);
     }
   };
 
-  useEffect(() => {
-    const cartQty = cartItems.find((item) => Number(q[item.id]) > item.stock);
-
-    if (cartQty && cartQty?.id) {
-      setFlag(true);
-    } else {
-      setFlag(false);
-    }
-  }, [q]);
-
   const handleCheckoutNavigation = () => {
-    if (!flag) {
+    if (!t.includes(false)) {
+      setError(false);
       history("/shipping");
       dispatch(DISPLAY_MINICART(false));
+    } else {
+      setError(true);
     }
   };
 
@@ -53,10 +47,7 @@ function MiniCart() {
       <div className="minicart-items">
         {cartItems.map((item) => (
           <MinicartCard
-            q={q}
-            setQ={setQ}
-            flag={flag}
-            setFlag={setFlag}
+            key={item.id}
             error={error}
             setError={setError}
             item={item}
@@ -79,21 +70,15 @@ function MiniCart() {
           <div className="minicart-total-btn">
             <div className="minicart-total-btn-cart">
               <button
-                onClick={() => {
-                  setTimeout(() => {
-                    handleViewCartNavigation();
-                  }, 500);
+                onClick={(e) => {
+                  handleViewCartNavigation(e);
                 }}
-                disabled={flag}
               >
                 View Cart
               </button>
             </div>
             <div className="minicart-total-btn-checkout">
-              <button
-                onClick={() => handleCheckoutNavigation()}
-                disabled={flag}
-              >
+              <button onClick={() => handleCheckoutNavigation()}>
                 Proceed to Checkout
               </button>
             </div>

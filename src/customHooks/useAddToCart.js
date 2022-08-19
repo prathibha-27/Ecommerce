@@ -8,13 +8,6 @@ export default function useAddToCart() {
 
   const handleAddToCart = (data, qty) => {
     const newData = data;
-
-    const checkNewID = cart?.filter((item) => item.id != data.id);
-    const newItem = cart?.find((item) => item.id == data.id);
-    if (cart.length === 0 || (checkNewID && !newItem)) {
-      newData.qty = qty;
-    }
-
     if (cart.length) {
       const dup = cart?.find((item) => item.id == data.id);
       if (dup && dup?.id) {
@@ -23,9 +16,11 @@ export default function useAddToCart() {
         const existItem = cart.filter((item) => item.id != data.id);
         dispatch(UPDATE_CART([...existItem, dup])); // qty=2, qty=3
       } else {
+        newData.qty = qty;
         dispatch(UPDATE_CART([...cart, newData]));
       }
     } else {
+      newData.qty = qty;
       dispatch(UPDATE_CART([...cart, newData]));
     }
   };

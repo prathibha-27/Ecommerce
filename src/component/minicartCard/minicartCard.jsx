@@ -4,30 +4,17 @@ import { DISPLAY_MINICART, UPDATE_CART } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef } from "react";
 
-function MinicartCard({
-  name,
-  id,
-  image,
-  qty,
-  price,
-  flag,
-  setFlag,
-  q,
-  setQ,
-  stock,
-}) {
+function MinicartCard({ name, id, image, qty, price, stock, error, setError }) {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart);
   const [quantity, setQuantity] = useState(0);
-  
+
   useEffect(() => {
     setQuantity(qty);
-    
   }, [cartItems]);
 
   const handleEdit = (e) => {
     setQuantity(e.target.value || 0);
-    setQ({ ...q, [id]: e.target.value || 0 });
   };
 
   const handleBlur = (e) => {
@@ -80,7 +67,7 @@ function MinicartCard({
               </svg>
             </div>
             <div>
-              {stock < quantity ? (
+              {error && quantity > stock ? (
                 <p
                   style={{
                     color: "red",

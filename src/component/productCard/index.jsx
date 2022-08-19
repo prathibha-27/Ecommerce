@@ -4,10 +4,11 @@ import { Link } from "react-router-dom";
 import useAddToCart from "../../customHooks/useAddToCart";
 import { DISPLAY_MINICART } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 
 function ProductCard({ img, name, category, price, stock, id, item }) {
   const [count, setCount] = useState(1);
-  const [error, setError] = useState(" ");
+  const [error, setError] = useState(false);
   const [click, setClick] = useState(false);
   const { handleAddToCart } = useAddToCart();
   const dispatch = useDispatch();
@@ -30,11 +31,11 @@ function ProductCard({ img, name, category, price, stock, id, item }) {
 
   const addToCart = (e) => {
     e.stopPropagation();
-    if (!count) {
+    if (!count || count > stock) {
       setClick(true);
-      setError("please enter qty equal to or more than 1");
+      setError(true);
     } else {
-      setError("");
+      setError(false);
       handleAddToCart(item, count);
 
       dispatch(DISPLAY_MINICART(true));
@@ -101,8 +102,11 @@ function ProductCard({ img, name, category, price, stock, id, item }) {
             Add to Cart
           </button>
         </div>
-        {click && addToCart ? (
-          <p className="product-card-content-error"> {error}</p>
+
+        {error ? (
+          <p className="product-card-content-error">
+            Please enter qty within stock
+          </p>
         ) : null}
       </div>
     </div>
