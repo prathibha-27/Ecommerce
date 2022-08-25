@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { UPDATE_PRODUCT } from "../../redux/actions";
+import { DISPLAY_MINICART, UPDATE_PRODUCT } from "../../redux/actions";
 import { useNavigate } from "react-router-dom";
 import useAddToCart from "../../customHooks/useAddToCart";
 
@@ -11,7 +11,7 @@ function ProductDetail(props) {
   const [selectedColor, setselectedColor] = useState("purple");
   const [count, setCount] = useState(1);
   const [click, setClick] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState(false);
   // const history = useNavigate();
   const { handleAddToCart } = useAddToCart();
 
@@ -31,7 +31,7 @@ function ProductDetail(props) {
       }
     };
     fetchData();
-  }, []);
+  }, [id]);
 
   const handleDecrement = () => {
     if (count > 1) setCount(count - 1);
@@ -52,12 +52,13 @@ function ProductDetail(props) {
   // };
 
   const addToCart = () => {
-    if (!count) {
+    if (!count || count > product?.data?.stock) {
       setClick(true);
-      setErrorMessage("please enter qty equal to or more than 1");
+      setErrorMessage(true);
     } else {
       setErrorMessage("");
       handleAddToCart(product?.data, count);
+      dispatch(DISPLAY_MINICART(true));
     }
   };
 
@@ -70,7 +71,9 @@ function ProductDetail(props) {
               product?.data?.stock ? "success-bg" : "error-bg"
             }`}
           >
-            {product?.data?.stock ? "In Stock" : "Out of Stock"}
+            {product?.data?.stock
+              ? `In Stock ${product?.data?.stock}`
+              : `Out of Stock ${product?.data?.stock}`}
           </div>
           {product?.data?.imageGallery.map(
             (img) => img.color == selectedColor && <img src={img.url} />
@@ -125,9 +128,9 @@ function ProductDetail(props) {
               Add to Cart
             </button>
           </div>
-          {click && addToCart ? (
+          {errorMessage ? (
             <p className="product-detail-description-content-btn-error">
-              {errorMessage}
+              Please add qty within stock
             </p>
           ) : null}
         </div>

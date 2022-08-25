@@ -2,11 +2,11 @@ const data = {
   products: [
     {
       id: 1,
-      category: "DNMX",
+      category: "DENIM",
       name: "Checked Shirt with Spread-Collar",
       image: "/images/image1.png",
-      price: 120,
-      stock: 10,
+      price: 620,
+      stock: 0,
       description:
         "To look your classy best, check out their striped shirts with Mandarin collars or classic solid shirts. DNMX also has denim inspired pieces to pull off cool everyday looks.Don’t miss out on DNMX jeans. They have everything from heavily distressed jeans and lightly washed skinny jeans to textured corduroy jeans. Also available are smart tapered trousers, charming flat-front trousers and more that evoke urbane charm.",
       imageGallery: [
@@ -25,7 +25,7 @@ const data = {
       category: "DNMX",
       name: "Checked Shirt with Cut-away-Collar",
       image: "/images/image4.png",
-      price: 220,
+      price: 20,
       stock: 10,
       description:
         "To look your classy best, check out their striped shirts with Mandarin collars or classic solid shirts. DNMX also has denim inspired pieces to pull off cool everyday looks.Don’t miss out on DNMX jeans. They have everything from heavily distressed jeans and lightly washed skinny jeans to textured corduroy jeans. Also available are smart tapered trousers, charming flat-front trousers and more that evoke urbane charm.",

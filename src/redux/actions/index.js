@@ -31,3 +31,8 @@ export const DISPLAY_MINICART = (val) => ({
   type: "DISPLAY_MINICART",
   val,
 });
+
+export const DISPLAY_SEARCH = (val) => ({
+  type: "DISPLAY_SEARCH",
+  val,
+});

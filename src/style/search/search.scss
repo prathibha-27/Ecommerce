@@ -12,8 +12,13 @@
     background: #f4f4f4;
     padding: 10px 4px 10px 10px;
     border-radius: 5px;
+    cursor: pointer;
     &-contents {
       margin-left: 5px;
+    }
+    &:hover {
+      box-shadow: rgba(122, 40, 40, 0.22) 0px 19px 30px;
+      transform: translate3d(0px, -2px, 0px);
     }
   }
   &-input {

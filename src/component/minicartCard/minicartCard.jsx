@@ -2,12 +2,25 @@ import React from "react";
 import { useState } from "react";
 import { DISPLAY_MINICART, UPDATE_CART } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-function MinicartCard({ name, id, image, qty, price, stock, error, setError }) {
+function MinicartCard({
+  name,
+  id,
+  image,
+  qty,
+  price,
+  stock,
+  flag,
+  setFlag,
+  q,
+  setQ,
+}) {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart);
   const [quantity, setQuantity] = useState(0);
+  const history = useNavigate();
 
   useEffect(() => {
     setQuantity(qty);
@@ -15,7 +28,27 @@ function MinicartCard({ name, id, image, qty, price, stock, error, setError }) {
 
   const handleEdit = (e) => {
     setQuantity(e.target.value || 0);
+    setQ({ ...q, [id]: e.target.value });
   };
+  cartItems.map((item) => {
+    if (Object.keys(q).length > 0) {
+      const arr1 = Object.keys(q).map((key) => {
+        //q = ['1', '2',]
+        if (item.stock <= q[key]) {
+          setFlag(true);
+          return true;
+        } else {
+          setFlag(false);
+          return false;
+        }
+      });
+      return arr1;
+    } else {
+      if (item.qty > item.stock) {
+        setFlag(true);
+      }
+    }
+  });
 
   const handleBlur = (e) => {
     const q = cartItems.map((item) => {
@@ -27,12 +60,20 @@ function MinicartCard({ name, id, image, qty, price, stock, error, setError }) {
         return { ...item };
       }
     });
-    dispatch(UPDATE_CART(q));
+
+    if (!flag) {
+      dispatch(UPDATE_CART(q));
+    }
   };
   const handleDelete = (e) => {
     e.stopPropagation();
     const items = cartItems.filter((item) => item.id && item.id !== id);
     dispatch(UPDATE_CART(items));
+  };
+
+  const handleProductNavigation = () => {
+    history(`/productdetail/${id}`);
+    dispatch(DISPLAY_MINICART(false));
   };
 
   return (
@@ -42,7 +83,10 @@ function MinicartCard({ name, id, image, qty, price, stock, error, setError }) {
           <img src={image} />
           <div className="minicartCard-list-products-details">
             <div className="minicartCard-list-products-details-pricing">
-              <div className="minicartCard-list-products-details-pricing-name">
+              <div
+                className="minicartCard-list-products-details-pricing-name"
+                onClick={() => handleProductNavigation()}
+              >
                 <strong>{name}</strong>
               </div>
               <div>
@@ -67,7 +111,7 @@ function MinicartCard({ name, id, image, qty, price, stock, error, setError }) {
               </svg>
             </div>
             <div>
-              {error && quantity > stock ? (
+              {quantity > stock ? (
                 <p
                   style={{
                     color: "red",

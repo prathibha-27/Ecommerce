@@ -23,6 +23,10 @@
 
           &-name {
             padding-right: 45px;
+            cursor: pointer;
+            &:hover {
+              color: rgb(8, 89, 8);
+            }
           }
         }
         &-actions {

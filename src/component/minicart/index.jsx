@@ -9,6 +9,7 @@ function MiniCart() {
   const [error, setError] = useState(false);
   const [flag, setFlag] = useState(false);
   const dispatch = useDispatch();
+  const [q, setQ] = useState({});
 
   useEffect(() => {
     let sum = 0;
@@ -19,25 +20,17 @@ function MiniCart() {
   }, [cartItems]);
 
   const history = useNavigate();
-  const t = cartItems.map((item) => item.qty <= item.stock);
+
   const handleViewCartNavigation = (e) => {
-    if (!t.includes(false)) {
-      setError(false);
+    if (!flag && !error) {
       history("/cart");
       dispatch(DISPLAY_MINICART(false));
-    } else {
-      setError(true);
     }
   };
 
   const handleCheckoutNavigation = () => {
-    if (!t.includes(false)) {
-      setError(false);
-      history("/shipping");
-      dispatch(DISPLAY_MINICART(false));
-    } else {
-      setError(true);
-    }
+    history("/shipping");
+    dispatch(DISPLAY_MINICART(false));
   };
 
   return (
@@ -57,6 +50,10 @@ function MiniCart() {
             price={item.price}
             id={item.id}
             stock={item.stock}
+            flag={flag}
+            setFlag={setFlag}
+            q={q}
+            setQ={setQ}
           />
         ))}
       </div>
@@ -73,6 +70,7 @@ function MiniCart() {
                 onClick={(e) => {
                   handleViewCartNavigation(e);
                 }}
+                disabled={flag}
               >
                 View Cart
               </button>

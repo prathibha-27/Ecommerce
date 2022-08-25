@@ -4,9 +4,17 @@ import { Link } from "react-router-dom";
 import useAddToCart from "../../customHooks/useAddToCart";
 import { DISPLAY_MINICART } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
 
-function ProductCard({ img, name, category, price, stock, id, item }) {
+function ProductCard({
+  img,
+  name,
+  category,
+  price,
+  stock,
+  id,
+  item,
+  priceRange,
+}) {
   const [count, setCount] = useState(1);
   const [error, setError] = useState(false);
   const [click, setClick] = useState(false);
@@ -70,7 +78,7 @@ function ProductCard({ img, name, category, price, stock, id, item }) {
           <Link to={`/productdetail/${id}`}>{name}</Link>
         </div>
         <div className="product-card-content-price">
-          <h4>${price.toFixed(2)}</h4>
+          <h4>${price}</h4>
         </div>
         <div className="product-card-content-btn">
           {stock ? (

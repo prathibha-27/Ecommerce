@@ -4,6 +4,7 @@ import { product } from "./product";
 import { cart, minicart } from "./cart";
 import { address } from "./address";
 import { pickup } from "./pickup";
+import { search } from "./search";
 
 const rootReducer = combineReducers({
   productList,
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   minicart,
   address,
   pickup,
+  search,
 });
 
 export default rootReducer;
