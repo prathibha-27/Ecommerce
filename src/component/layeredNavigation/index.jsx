@@ -3,18 +3,17 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 
 function LayeredNavigation({
-  priceRange,
-  setPriceRange,
-  categoryy,
-  setCategoryy,
-  stock,
-  setStock,
-  flag,
-  setFlag,
+  inputValue,
+  setInputValue,
+  checked,
+  setChecked,
+  handleClearAll,
+  handleCheckedOptions,
 }) {
-  const [priceDisplay, setPriceDisplay] = useState(false);
-  const [categoryDisplay, setCategoryDisplay] = useState(false);
-  const [stockDisplay, setStockDisplay] = useState(false);
+  const { priceRange, categoryy, stock } = inputValue;
+  const [priceDisplay, setPriceDisplay] = useState(true);
+  const [categoryDisplay, setCategoryDisplay] = useState(true);
+  const [stockDisplay, setStockDisplay] = useState(true);
 
   const arrayList = ["0-99", "100-500", "500-1000"];
 
@@ -51,17 +50,62 @@ function LayeredNavigation({
 
   const x = [...new Set(productList.map((item) => item.category))];
 
-  const handleCancel = () => {};
+  const changeRadio = (e) => {
+    setChecked({ [e.target.value]: true });
+  };
 
   return (
     <div className="layeredNavigation">
-      <button onClick={() => handleCancel()}>Cancel</button>
+      <div className="layeredNavigation-accordionSelected">
+        {Object.keys(inputValue).map((item) => {
+          if (item === "priceRange" && priceRange !== "") {
+            return (
+              <div className="layeredNavigation-accordionSelected-displaySection ">
+                <div className="layeredNavigation-accordionSelected-displaySection-option ">
+                  {inputValue[item]}
+                </div>
+                <button
+                  className="layeredNavigation-accordionSelected-displaySection-cancel"
+                  onClick={(e) => handleCheckedOptions(e, item)}
+                >
+                  X
+                </button>
+              </div>
+            );
+          } else if (item === "categoryy" && categoryy !== "") {
+            return (
+              <div className="layeredNavigation-accordionSelected-displaySection">
+                <div className="layeredNavigation-accordionSelected-displaySection-option">
+                  {inputValue[item]}
+                </div>
+                <button
+                  className="layeredNavigation-accordionSelected-displaySection-cancel"
+                  onClick={(e) => handleCheckedOptions(e, item)}
+                >
+                  X
+                </button>
+              </div>
+            );
+          }
+        })}
+
+        <div class="separator"></div>
+
+        <button
+          className="layeredNavigation-accordionSelected-clearAll"
+          onClick={() => handleClearAll()}
+        >
+          Clear All
+        </button>
+      </div>
+
       <button
         className="layeredNavigation-accordion"
         onClick={() => handlePriceClick()}
       >
         Price
       </button>
+
       <div className="layeredNavigation-filter">
         {priceDisplay ? (
           <>
@@ -74,7 +118,11 @@ function LayeredNavigation({
                       type="radio"
                       name="price"
                       value={priceRange}
-                      onChange={() => setPriceRange(item)}
+                      checked={checked.priceRange}
+                      onChange={(e) => {
+                        setInputValue({ ...inputValue, priceRange: item });
+                        changeRadio(e);
+                      }}
                     />
                     {item}
                   </label>
@@ -101,7 +149,12 @@ function LayeredNavigation({
                       type="radio"
                       name="category"
                       value={categoryy}
-                      onChange={() => setCategoryy(item)}
+                      checked={checked.categoryy}
+                      // checked={filter.categoryy}
+                      onChange={(e) => {
+                        setInputValue({ ...inputValue, categoryy: item });
+                        changeRadio(e);
+                      }}
                     />
                     {item}
                   </label>
@@ -126,7 +179,11 @@ function LayeredNavigation({
                   type="radio"
                   name="stock"
                   value={stock}
-                  onChange={() => setStock(s)}
+                  checked={checked.stock}
+                  onChange={(e) => {
+                    setInputValue({ ...inputValue, stock: s });
+                    changeRadio(e);
+                  }}
                 />
                 {count > 0 ? "In stock" : null}
               </label>
@@ -137,7 +194,11 @@ function LayeredNavigation({
                   type="radio"
                   name="stock"
                   value={stock}
-                  onChange={() => setStock(v)}
+                  checked={checked.stock}
+                  onChange={(e) => {
+                    setInputValue({ ...inputValue, stock: v });
+                    changeRadio(e);
+                  }}
                 />
 
                 {coun > 0 ? "Out of sotck" : null}

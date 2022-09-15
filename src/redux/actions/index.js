@@ -36,3 +36,4 @@ export const DISPLAY_SEARCH = (val) => ({
   type: "DISPLAY_SEARCH",
   val,
 });
+

@@ -7,12 +7,24 @@ import LayeredNavigation from "../layeredNavigation";
 
 function ProductList() {
   const [loading, setLoading] = useState(false);
-  const [priceRange, setPriceRange] = useState("");
-  const [categoryy, setCategoryy] = useState("");
-  const [stock, setStock] = useState([]);
+
+  const filter = useSelector((state) => state.filter);
+
+  const [checked, setChecked] = useState({
+    priceRange: false,
+    categoryy: false,
+    stock: false,
+  });
+  const [loop, setLoop] = useState([]);
+
+  const [inputValue, setInputValue] = useState({
+    priceRange: "",
+    categoryy: "",
+    stock: [],
+  });
+
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.productList);
-  const [flag, setFlag] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,77 +49,93 @@ function ProductList() {
     //     console.log(err);
     //   });
   }, []);
-  const p = priceRange.split("-");
-  const minPrice = p[0];
-  const maxPrice = p[1];
 
-  const items = productList.filter((item) => {
-    if (priceRange.length > 0) {
-      if (
-        parseInt(maxPrice) - parseInt(minPrice) &&
-        parseInt(maxPrice) > parseInt(item.price) &&
-        parseInt(minPrice) < parseInt(item.price)
-      ) {
-        if (stock.length > 0) {
-          const unique = stock.includes(item);
-          if (unique) {
-            if (item.category === categoryy) {
+  useEffect(() => {
+    const p = inputValue.priceRange.split("-");
+    const minPrice = p[0];
+    const maxPrice = p[1];
+    const items = productList.filter((item) => {
+      if (inputValue.priceRange.length > 0) {
+        if (
+          parseInt(maxPrice) > parseInt(item.price) &&
+          parseInt(minPrice) < parseInt(item.price)
+        ) {
+          if (inputValue.stock.length > 0) {
+            const unique = inputValue.stock.includes(item);
+            if (unique) {
+              if (item.category === inputValue.categoryy) {
+                return item;
+              } else if (inputValue.categoryy === "") {
+                return item;
+              }
+            }
+          } else {
+            if (item.category === inputValue.categoryy) {
               return item;
-            } else if (categoryy === "") {
+            } else if (inputValue.categoryy === "") {
               return item;
             }
           }
-        } else {
-          if (item.category === categoryy) {
-            return item;
-          } else if (categoryy === "") {
-            return item;
-          }
-        }
 
-        return false;
-      }
-    } else if (item.category === categoryy) {
-      debugger;
-      if (stock.length > 0) {
-        const unique = stock.includes(item);
-        if (unique) {
-          if (item.category === categoryy) {
-            return item;
-          }
+          return false;
         }
-      } else if (item.category === categoryy) {
+      } else if (item.category === inputValue.categoryy) {
+        if (inputValue.stock.length > 0) {
+          const unique = inputValue.stock.includes(item);
+          if (unique) {
+            if (item.category === inputValue.categoryy) {
+              return item;
+            }
+          }
+        } else if (item.category === inputValue.categoryy) {
+          return item;
+        }
+        return false;
+      } else if (inputValue.stock.length > 0 && !inputValue.categoryy) {
+        const unique = inputValue.stock.includes(item);
+        return unique;
+      } else if (
+        inputValue.priceRange.length === 0 &&
+        !inputValue.categoryy &&
+        inputValue.stock.length === 0
+      ) {
         return item;
       }
-      return false;
-    } else if (stock.length > 0 && !categoryy) {
-      const unique = stock.includes(item);
-      return unique;
-    } else if (priceRange.length === 0 && !categoryy && stock.length === 0) {
-      return item;
+    });
+    setLoop(items);
+  }, [inputValue.priceRange, inputValue.categoryy, inputValue.stock]);
+
+  const handleClearAll = () => {
+    setChecked({ priceRange: false, categoryy: false, stock: false });
+    setInputValue({ ...inputValue, priceRange: "", categoryy: "" });
+  };
+
+  const handleCheckedOptions = (e, item) => {
+    if (item === "priceRange") {
+      setInputValue({ ...inputValue, priceRange: "" });
+      setChecked({ priceRange: false });
+    } else if (item === "categoryy") {
+      setInputValue({ ...inputValue, categoryy: "" });
+      setChecked({ categoryy: false });
     }
-  });
+  };
 
   return (
-    <div className="product-list">
+    <div className="productlist">
       <LayeredNavigation
-        priceRange={priceRange}
-        setPriceRange={setPriceRange}
-        categoryy={categoryy}
-        setCategoryy={setCategoryy}
-        stock={stock}
-        setStock={setStock}
-        flag={flag}
-        setFlag={setFlag}
+        handleClearAll={handleClearAll}
+        handleCheckedOptions={handleCheckedOptions}
+        inputValue={inputValue}
+        setInputValue={setInputValue}
+        checked={checked}
+        setChecked={setChecked}
       />
 
       {loading ? (
         <p>Loading</p>
       ) : (
-        items?.map((item, i) => (
+        loop?.map((item, i) => (
           <ProductCard
-            priceRange={priceRange}
-            setPriceRange={setPriceRange}
             key={i}
             img={item.image}
             name={item.name}
@@ -127,8 +155,8 @@ function ProductList() {
         productList?.map((item, i) => (
           <>
             <ProductCard
-              priceRange={priceRange}
-              setPriceRange={setPriceRange}
+              inputValue.priceRange={inputValue.priceRange}
+              setinputValue.priceRange={setinputValue.priceRange}
               key={i}
               img={item.image}
               name={item.name}
