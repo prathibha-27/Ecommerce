@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import MinicartCard from "../minicartCard/minicartCard";
+import MinicartCard from "../minicartCard/index";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { DISPLAY_MINICART } from "../../redux/actions";
