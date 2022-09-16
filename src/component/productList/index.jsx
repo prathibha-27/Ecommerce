@@ -14,7 +14,6 @@ function ProductList() {
     stock: false,
   });
   const [loop, setLoop] = useState([]);
-  console.log(loop, "loop");
 
   const [inputValue, setInputValue] = useState({
     priceRange: "",
