@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import CartCard from "../cartCard";
 import { useDispatch, useSelector } from "react-redux";
 import CartSummary from "../cartSummary";
+import { useNavigate } from "react-router-dom";
 import { UPDATE_CART } from "../../redux/actions";
 
 function Cart() {
@@ -10,10 +11,12 @@ function Cart() {
   const [flag, setFlag] = useState(false);
 
   const dispatch = useDispatch();
+  const history = useNavigate();
 
   const handleDeleteAll = () => {
     if (cart.length > 0) {
       setDel([]);
+      history("/productlist");
     }
     dispatch(UPDATE_CART([]));
   };

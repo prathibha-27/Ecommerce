@@ -8,14 +8,13 @@ import LayeredNavigation from "../layeredNavigation";
 function ProductList() {
   const [loading, setLoading] = useState(false);
 
-  const filter = useSelector((state) => state.filter);
-
   const [checked, setChecked] = useState({
     priceRange: false,
     categoryy: false,
     stock: false,
   });
   const [loop, setLoop] = useState([]);
+  console.log(loop, "loop");
 
   const [inputValue, setInputValue] = useState({
     priceRange: "",
@@ -32,6 +31,7 @@ function ProductList() {
       try {
         const result = await axios.get("http://localhost:4000/products");
         dispatch(UPDATE_PRODUCT_LIST(result.data));
+        setLoop(result.data);
         setLoading(false);
       } catch (err) {
         console.log(err);
@@ -95,7 +95,7 @@ function ProductList() {
         const unique = inputValue.stock.includes(item);
         return unique;
       } else if (
-        inputValue.priceRange.length === 0 &&
+        !inputValue.priceRange &&
         !inputValue.categoryy &&
         inputValue.stock.length === 0
       ) {
@@ -103,11 +103,11 @@ function ProductList() {
       }
     });
     setLoop(items);
-  }, [inputValue.priceRange, inputValue.categoryy, inputValue.stock]);
+  }, [inputValue]);
 
   const handleClearAll = () => {
     setChecked({ priceRange: false, categoryy: false, stock: false });
-    setInputValue({ ...inputValue, priceRange: "", categoryy: "" });
+    setInputValue({ ...inputValue, priceRange: "", categoryy: "", stock: [] });
   };
 
   const handleCheckedOptions = (e, item) => {
@@ -148,28 +148,6 @@ function ProductList() {
           />
         ))
       )}
-
-      {/* {loading ? (
-        <p>Loading</p>
-      ) : (
-        productList?.map((item, i) => (
-          <>
-            <ProductCard
-              inputValue.priceRange={inputValue.priceRange}
-              setinputValue.priceRange={setinputValue.priceRange}
-              key={i}
-              img={item.image}
-              name={item.name}
-              category={item.category}
-              price={item.price}
-              stock={item.stock}
-              id={item.id}
-              description={item.description}
-              item={item}
-            />
-          </>
-        ))
-      )} */}
     </div>
   );
 }

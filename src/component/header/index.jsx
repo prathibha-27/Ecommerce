@@ -13,7 +13,7 @@ function Header() {
   const dispatch = useDispatch();
   const [count, setCount] = useState(0);
 
-  let menuRef = useRef();
+  let menuRef = useRef(null);
 
   useEffect(() => {
     let itemcount = 0;
@@ -24,7 +24,7 @@ function Header() {
   }, [cartItems]);
 
   let handler = (event) => {
-    if (minicart && !menuRef.current?.contains(event.target)) {
+    if (menuRef.current && !menuRef.current?.contains(event.target)) {
       dispatch(DISPLAY_MINICART(false));
     }
   };
@@ -34,7 +34,6 @@ function Header() {
   }, []);
 
   const handleMinicart = () => {
-    // setDisplay((minicart) => !minicart);
     dispatch(DISPLAY_MINICART(!minicart));
   };
   return (
@@ -44,7 +43,7 @@ function Header() {
           Ajio
         </Link>
       </h1>
-      <div className="header-head-nav" ref={menuRef}>
+      <div className="header-head-nav">
         <nav className="header-head-nav">
           <Link className="header-head-nav-link" to="/">
             Home {"  "}
@@ -57,7 +56,7 @@ function Header() {
 
         <div className="header-head-nav-actions">
           <Search />
-          <div className="header-head-nav-actions-minicart">
+          <div className="header-head-nav-actions-minicart" ref={menuRef}>
             <div
               className="header-head-nav-actions-minicart-icon"
               onClick={() => handleMinicart()}
@@ -70,8 +69,8 @@ function Header() {
               <span>{count}</span>
             </div>
           </div>
+          {minicart ? <MiniCart /> : null}
         </div>
-        {minicart ? <MiniCart /> : null}
       </div>
     </div>
   );

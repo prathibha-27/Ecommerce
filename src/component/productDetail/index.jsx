@@ -12,6 +12,8 @@ function ProductDetail(props) {
   const [count, setCount] = useState(1);
   const [click, setClick] = useState(false);
   const [errorMessage, setErrorMessage] = useState(false);
+  const minicart = useSelector((state) => state.minicart);
+
   // const history = useNavigate();
   const { handleAddToCart } = useAddToCart();
 
@@ -51,12 +53,15 @@ function ProductDetail(props) {
   //   }
   // };
 
-  const addToCart = () => {
+  const addToCart = (e) => {
+    e.stopPropagation();
+
     if (!count || count > product?.data?.stock) {
       setClick(true);
       setErrorMessage(true);
     } else {
       setErrorMessage("");
+      debugger;
       handleAddToCart(product?.data, count);
       dispatch(DISPLAY_MINICART(true));
     }
